@@ -8,4 +8,4 @@
 
 -   Создать свой репозиторий на GitHub и поместить туда папку с первым заданием.
 
-[Ссылка на решение](https://github.com/from0toweb/glo_react/blob/lesson_01/script.js)
+[Ссылка на решение](https://github.com/from0toweb/glo_react/blob/lesson_01/scriptNew.js)

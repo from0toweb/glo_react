@@ -5,5 +5,7 @@
     "singleQuote": true,
     "trailingComma": "es5",
     "jsxBracketSameLine": false,
-    "semi": false
+    "semi": true,
+    "endOfLine": "crlf",
+    "arrowParens": "avoid"
 }

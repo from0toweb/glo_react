@@ -1,0 +1,57 @@
+.advantages {
+    padding: 70px 0px;
+    text-align: center;
+    color: #383a4c;
+}
+.advantages__title {
+    font-weight: bold;
+    font-size: 35px;
+    line-height: 41px;
+
+    margin-bottom: 25px;
+}
+.advantages__subtitle {
+    display: block;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 26px;
+    margin-bottom: 35px;
+}
+.advantages__text {
+    font-size: 18px;
+    line-height: 25px;
+    max-width: 724px;
+    margin: auto;
+    margin-bottom: 50px;
+}
+.advantages__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.advantages__item {
+    display: flex;
+    flex: 0 0 23%;
+    flex-direction: column;
+    align-items: center;
+}
+.advantages__number {
+    width: 113px;
+    height: 113px;
+    background: #23c7ec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 57px;
+    line-height: 80px;
+    color: #ffffff;
+    border-radius: 50%;
+    margin-bottom: 30px;
+}
+.advantages__description {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    color: #383a4c;
+}

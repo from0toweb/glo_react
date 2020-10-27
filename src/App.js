@@ -41,6 +41,9 @@ const GlobalStyle = createGlobalStyle`
         padding: 0;
 
     }
+    #root {
+        height: 100vh;
+    }
 
 `;
 class App extends React.Component {

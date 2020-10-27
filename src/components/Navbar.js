@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import './navbar.css';
 import logoImg from '../img/logo.svg';
 import loginImg from '../img/sign.svg';
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
+import { Menu } from './components/Menu';
 import { Navbar } from './components/Navbar';
 
 const GlobalStyle = createGlobalStyle`
@@ -39,7 +40,12 @@ const GlobalStyle = createGlobalStyle`
     p {
         margin: 0;
         padding: 0;
-
+    }
+    button {
+        cursor: pointer;
+    }
+    input,button {
+        font-family: inherit;
     }
 
 `;
@@ -49,6 +55,7 @@ class App extends React.Component {
             <>
                 <GlobalStyle />
                 <Navbar />
+                <Menu />
             </>
         );
     }

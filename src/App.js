@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import { Menu } from './components/Menu';
 import { Navbar } from './components/Navbar';
+import { ProductModal } from './components/ProductModal';
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -49,15 +50,17 @@ const GlobalStyle = createGlobalStyle`
     }
 
 `;
-class App extends React.Component {
-    render() {
-        return (
-            <>
-                <GlobalStyle />
-                <Navbar />
-                <Menu />
-            </>
-        );
-    }
-}
+const App = () => {
+    const [openItem, setOpenItem] = useState('');
+
+    return (
+        <>
+            <GlobalStyle />
+            <Navbar />
+            <Menu setOpenItem={setOpenItem} />
+
+            <ProductModal openItem={openItem} setOpenItem={setOpenItem} />
+        </>
+    );
+};
 export default App;

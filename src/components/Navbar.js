@@ -14,7 +14,7 @@ const NavbarHeader = styled.header`
     justify-content: space-between;
     align-items: center;
     padding: 15px;
-    background-color: #299b01;
+    background-color: #1e235d;
     color: white;
 `;
 const Logo = styled.div`

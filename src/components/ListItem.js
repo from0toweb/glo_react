@@ -6,7 +6,7 @@ const Item = styled.div`
     cursor: pointer;
     width: 400px;
     height: 155px;
-    background: ${({ img }) => `url(${img})`} no-repeat center center/cover;
+    background: ${({ img }) => `url(${img})`} no-repeat center center/105% 110%;
     filter: drop-shadow(0px 10px 20px rgba(0, 0, 0, 0.3));
     color: #fff;
     font-size: 30px;
@@ -29,7 +29,7 @@ const Item = styled.div`
     }
     &:hover {
         filter: drop-shadow(0px 10px 25px rgba(0, 0, 0, 0.35));
-        background-size: 120%;
+        background-size: 120% 120%;
         &:after {
             opacity: 40%;
         }
@@ -42,20 +42,23 @@ const Wrapper = styled.div`
     flex-wrap: wrap;
 `;
 
-export const ListItem = ({ itemList }) => {
+export const ListItem = ({ itemList, setOpenItem }) => {
     return (
         <Wrapper>
-            {itemList.map(({ name, img, id, price }) => (
-                <Item key={id} img={img}>
-                    <span>{name}</span>
-                    <p>
-                        {price.toLocaleString('ru-Ru', {
-                            style: 'currency',
-                            currency: 'RUB',
-                        })}
-                    </p>
-                </Item>
-            ))}
+            {itemList.map(item => {
+                const { name, img, id, price } = item;
+                return (
+                    <Item key={id} img={img} onClick={() => setOpenItem(item)}>
+                        <span>{name}</span>
+                        <p>
+                            {price.toLocaleString('ru-Ru', {
+                                style: 'currency',
+                                currency: 'RUB',
+                            })}
+                        </p>
+                    </Item>
+                );
+            })}
         </Wrapper>
     );
 };

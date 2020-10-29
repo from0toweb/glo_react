@@ -28,7 +28,7 @@ const ModalBaner = styled.div`
     background: url(${({ img }) => img}) no-repeat center center/cover;
 `;
 
-const PopupButton = styled.button`
+export const PopupButton = styled.button`
     width: 220px;
     padding: 15px 20px;
     border: none;

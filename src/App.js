@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import { Menu } from './components/Menu';
 import { Navbar } from './components/Navbar';
 import { ProductModal } from './components/ProductModal';
+import { Basket } from './components/Basket';
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -48,7 +49,9 @@ const GlobalStyle = createGlobalStyle`
     input,button {
         font-family: inherit;
     }
-
+    #root {
+        overflow-x: hidden;
+    }
 `;
 const App = () => {
     const [openItem, setOpenItem] = useState('');
@@ -58,7 +61,7 @@ const App = () => {
             <GlobalStyle />
             <Navbar />
             <Menu setOpenItem={setOpenItem} />
-
+            <Basket />
             <ProductModal openItem={openItem} setOpenItem={setOpenItem} />
         </>
     );

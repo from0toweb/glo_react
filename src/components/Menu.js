@@ -8,6 +8,7 @@ import { MainImg } from './MainImg';
 const MenuStyled = styled.main`
     background-color: #ccc;
     padding-top: 80px;
+    transform: translateX(380px);
 `;
 
 const H2 = styled.h2`

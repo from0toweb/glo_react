@@ -1,5 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { CountItem } from './CountItem';
+import { useCount } from '../Hooks/useCount';
+import { totalPrice, formatPrice } from '../Functions/secondaryFun';
 
 const Modal = styled.div`
     position: fixed;
@@ -73,13 +76,31 @@ const Price = styled.span`
     font-weight: normal;
 `;
 
-export const ProductModal = ({ openItem, setOpenItem }) => {
+const TotalPriceItem = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+`;
+
+export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
+    const counter = useCount();
+
     const closeModal = e => {
         if (e.target.id === 'modal') {
             setOpenItem(null);
         }
     };
-    if (!openItem) return null;
+
+    const order = {
+        ...openItem,
+        count: counter.count,
+    };
+
+    const addToOrder = () => {
+        setOrders([...orders, order]);
+        setOpenItem(null);
+    };
+
     return (
         <Modal id="modal" onClick={closeModal}>
             <ModalDialog>
@@ -87,14 +108,14 @@ export const ProductModal = ({ openItem, setOpenItem }) => {
                 <ModalContent>
                     <ModalTitle>
                         <H3>{openItem.name}</H3>
-                        <Price>
-                            {openItem.price.toLocaleString('ru-Ru', {
-                                style: 'currency',
-                                currency: 'RUB',
-                            })}
-                        </Price>
+                        <Price>{formatPrice(openItem.price)}</Price>
                     </ModalTitle>
-                    <PopupButton>Добавить</PopupButton>
+                    <CountItem {...counter} />
+                    <TotalPriceItem>
+                        <span>Цена</span>
+                        <span>{formatPrice(totalPrice(order))}</span>
+                    </TotalPriceItem>
+                    <PopupButton onClick={addToOrder}>Добавить</PopupButton>
                 </ModalContent>
             </ModalDialog>
         </Modal>

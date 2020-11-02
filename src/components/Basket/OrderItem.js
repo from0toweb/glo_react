@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import buttonRemove from '../img/del.svg';
+import buttonRemove from '../../img/del.svg';
+import { totalPrice } from '../Functions/secondaryFun';
+import { formatPrice } from '../Functions/secondaryFun';
 
 const Item = styled.div`
     display: flex;
@@ -29,12 +31,12 @@ const ItemRemove = styled.button`
     padding: 0;
 `;
 
-export const OrderItem = ({ text }) => {
+export const OrderItem = ({ order }) => {
     return (
         <Item>
-            <ItemName>Бургер</ItemName>
-            <ItemCount>2</ItemCount>
-            <ItemPrice>{text ? text : '850p'}</ItemPrice>
+            <ItemName>{order.name}</ItemName>
+            <ItemCount>{order.count}</ItemCount>
+            <ItemPrice>{formatPrice(totalPrice(order))}</ItemPrice>
             <ItemRemove></ItemRemove>
         </Item>
     );

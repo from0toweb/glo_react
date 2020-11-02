@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import closeArrow from '../img/left-arrow.svg';
-import { PopupButton } from './ProductModal';
+import closeArrow from '../../img/left-arrow.svg';
+import { PopupButton } from '../Modal/ProductModal';
 import { OrderItem } from './OrderItem';
+import { totalPrice } from '../Functions/secondaryFun';
+import { formatPrice } from '../Functions/secondaryFun';
 
 const MainBasket = styled.div`
     position: fixed;
@@ -60,22 +62,34 @@ const TotlalPrice = styled.span`
     text-align: right;
 `;
 
-export const Basket = () => {
+const Empty = styled.p`
+    text-align: center;
+`;
+
+export const Basket = ({ orders, setOrders }) => {
+    const total = orders.reduce(
+        (result, order) => totalPrice(order) + result,
+        0
+    );
     return (
         <MainBasket>
             <CloseBasket></CloseBasket>
             <BasketTitle>Ваш заказ</BasketTitle>
             <Order>
                 <OrderList>
-                    <OrderItem text="1250р" />
-                    <OrderItem />
-                    <OrderItem />
-                    <OrderItem />
+                    <hr />
+                    {orders.length ? (
+                        orders.map(order => (
+                            <OrderItem key={order.id} order={order} />
+                        ))
+                    ) : (
+                        <Empty>Список заказов пуст</Empty>
+                    )}
                 </OrderList>
                 <OrderTotal>
                     <TotalName>Итого</TotalName>
                     <TotalCount>5</TotalCount>
-                    <TotlalPrice>350Р</TotlalPrice>
+                    <TotlalPrice>{formatPrice(total)}</TotlalPrice>
                 </OrderTotal>
             </Order>
             <PopupButton>оформить</PopupButton>

@@ -1,68 +1,23 @@
-import React, { useState } from 'react';
-import { createGlobalStyle } from 'styled-components';
-import { Menu } from './components/Menu';
-import { Navbar } from './components/Navbar';
-import { ProductModal } from './components/ProductModal';
-import { Basket } from './components/Basket';
+import React from 'react';
+import { GlobalStyle } from './components/Styles/GlobalStyle';
+import { useOpenItem } from './components/Hooks/useOpenItem';
+import { useOrders } from './components/Hooks/useOrders';
+import { Menu } from './components/Menu/Menu';
+import { Navbar } from './components/NavBar/Navbar';
+import { ProductModal } from './components/Modal/ProductModal';
+import { Basket } from './components/Basket/Basket';
 
-const GlobalStyle = createGlobalStyle`
-    * {
-    box-sizing: border-box;
-    font-family: Roboto, sans-serif;
-    }
-
-    body {
-        margin: 0;
-        background-color: #f0f0f0;
-        font-size: 20px;
-        color: black;
-    }
-    a {
-        text-decoration: none;
-        color: inherit;
-    }
-    img {
-        max-width: 100%;
-        height: auto
-    }
-
-    ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-    h1,
-    h2,
-    h3
-    {
-        font-family: Pacifico, sans-serif;
-        padding: 0;
-        margin: 0;
-    }
-    p {
-        margin: 0;
-        padding: 0;
-    }
-    button {
-        cursor: pointer;
-    }
-    input,button {
-        font-family: inherit;
-    }
-    #root {
-        overflow-x: hidden;
-    }
-`;
 const App = () => {
-    const [openItem, setOpenItem] = useState('');
+    const openItem = useOpenItem();
+    const orders = useOrders();
 
     return (
         <>
             <GlobalStyle />
             <Navbar />
-            <Menu setOpenItem={setOpenItem} />
-            <Basket />
-            <ProductModal openItem={openItem} setOpenItem={setOpenItem} />
+            <Menu {...openItem} />
+            <Basket {...orders} />
+            {openItem.openItem && <ProductModal {...openItem} {...orders} />}
         </>
     );
 };

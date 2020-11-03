@@ -2,26 +2,32 @@ import React from 'react';
 import styled from 'styled-components';
 
 const CountWrapper = styled.div`
-    width: 100%;
     display: flex;
     justify-content: space-between;
 `;
 
 const CountInput = styled.input`
-    width: 50px;
-    font-size: 20px;
+    width: 70px;
+    height: 100%;
+    text-align: center;
+
+    font-size: 18px;
     pointer-events: none;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    margin: 0px 7px;
 `;
 
 const ButtonCount = styled.button`
-    background-color: transparent;
+    width: 35px;
+    height: 35px;
+    background-color: #cccccc94;
+    border-radius: 50%;
     border: none;
 `;
-
 export function CountItem({ count, setCount, onChange }) {
     return (
         <CountWrapper>
-            <span>Количество</span>
             <div>
                 <ButtonCount
                     disabled={count <= 1}

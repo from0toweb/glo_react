@@ -26,7 +26,7 @@ const dbMenu = {
             img: '/menu/freckles-burger.png',
             id: 3,
             price: 350,
-            toppings: ['Ананас', 'Майонец'],
+            toppings: ['Ананас', 'Майонез'],
         },
         {
             name: 'Timon Burger',
@@ -71,7 +71,7 @@ const dbMenu = {
             price: 75,
         },
         {
-            name: 'Нагиевцы',
+            name: 'Нагетсы',
             img: '/menu/nuggets.png',
             id: 4,
             price: 100,

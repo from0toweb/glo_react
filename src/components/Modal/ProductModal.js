@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import { CountItem } from './CountItem';
 import { useCount } from '../Hooks/useCount';
 import { totalPrice, formatPrice } from '../Functions/secondaryFun';
+import buttonIcon from '../../img/shopping-cart.svg';
+import { Toppings } from './Toppings';
+import { useToppings } from '../Hooks/useToppings';
 
 const Modal = styled.div`
     position: fixed;
@@ -32,7 +35,10 @@ const ModalBaner = styled.div`
 `;
 
 export const PopupButton = styled.button`
-    width: 220px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    width: 200px;
     padding: 15px 20px;
     border: none;
     outline: none;
@@ -50,13 +56,21 @@ export const PopupButton = styled.button`
     }
 `;
 
+const ButtonIcon = styled.span`
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    vertical-align: sub;
+    background: url(${buttonIcon}) no-repeat center center/100%;
+`;
+
 const ModalContent = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     flex-grow: 1;
     padding: 20px 40px 40px;
-    align-items: center;
+    align-items: flex-start;
 `;
 
 const ModalTitle = styled.div`
@@ -76,14 +90,16 @@ const Price = styled.span`
     font-weight: normal;
 `;
 
-const TotalPriceItem = styled.div`
+const ModalFooter = styled.div`
     width: 100%;
     display: flex;
+    align-items: center;
     justify-content: space-between;
 `;
 
 export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
     const counter = useCount();
+    const toppings = useToppings(openItem);
 
     const closeModal = e => {
         if (e.target.id === 'modal') {
@@ -94,6 +110,7 @@ export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
     const order = {
         ...openItem,
         count: counter.count,
+        topping: toppings.toppings,
     };
 
     const addToOrder = () => {
@@ -110,12 +127,14 @@ export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
                         <H3>{openItem.name}</H3>
                         <Price>{formatPrice(openItem.price)}</Price>
                     </ModalTitle>
-                    <CountItem {...counter} />
-                    <TotalPriceItem>
-                        <span>Цена</span>
-                        <span>{formatPrice(totalPrice(order))}</span>
-                    </TotalPriceItem>
-                    <PopupButton onClick={addToOrder}>Добавить</PopupButton>
+                    {openItem.toppings && <Toppings {...toppings} />}
+                    <ModalFooter>
+                        <CountItem {...counter} />
+                        <PopupButton onClick={addToOrder}>
+                            <ButtonIcon />
+                            {formatPrice(totalPrice(order))}
+                        </PopupButton>
+                    </ModalFooter>
                 </ModalContent>
             </ModalDialog>
         </Modal>

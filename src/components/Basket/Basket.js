@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import closeArrow from '../../img/left-arrow.svg';
+import basketLogo from '../../img/basket.svg';
 import { PopupButton } from '../Modal/ProductModal';
 import { OrderItem } from './OrderItem';
 import { totalPrice } from '../Functions/secondaryFun';
@@ -19,6 +20,10 @@ const MainBasket = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    transform: translateX(
+        ${({ openBasket }) => (openBasket ? `0px` : `-330px`)}
+    );
+    transition: 0.5s;
 `;
 const CloseBasket = styled.span`
     cursor: pointer;
@@ -58,29 +63,79 @@ const TotalCount = styled.span`
 `;
 const TotlalPrice = styled.span`
     margin-right: 14px;
-    min-width: 56px;
+    min-width: 99px;
     text-align: right;
+`;
+
+const OpenBasket = styled.div`
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    bottom: 0px;
+    background-color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: ${({ openBasket }) => (openBasket ? `0px` : `50px`)};
+    transition: 0.5s;
+`;
+const OpenImg = styled.span`
+    position: relative;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    background: url(${basketLogo}) no-repeat center center/100%;
+    &::before {
+        content: '';
+        display: ${({ totalCount, openBasket }) =>
+            totalCount <= 0 || openBasket ? `none` : `block`};
+        position: absolute;
+        right: 4px;
+        top: 0px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background-color: red;
+    }
 `;
 
 const Empty = styled.p`
     text-align: center;
 `;
 
-export const Basket = ({ orders, setOrders }) => {
+export const Basket = ({ orders, setOrders, openBasket, setOpenBasket }) => {
     const total = orders.reduce(
         (result, order) => totalPrice(order) + result,
         0
     );
+
+    const totalCount = orders.reduce(
+        (result, order) => order.count + result,
+        0
+    );
+
     return (
-        <MainBasket>
-            <CloseBasket></CloseBasket>
+        <MainBasket openBasket={openBasket}>
+            <CloseBasket onClick={() => setOpenBasket(false)} />
+            <OpenBasket openBasket={openBasket}>
+                <OpenImg
+                    onClick={() => setOpenBasket(true)}
+                    totalCount={totalCount}
+                    openBasket={openBasket}
+                />
+            </OpenBasket>
             <BasketTitle>Ваш заказ</BasketTitle>
             <Order>
                 <OrderList>
                     <hr />
                     {orders.length ? (
                         orders.map(order => (
-                            <OrderItem key={order.id} order={order} />
+                            <OrderItem
+                                key={order.id}
+                                order={order}
+                                orders={orders}
+                                setOrders={setOrders}
+                            />
                         ))
                     ) : (
                         <Empty>Список заказов пуст</Empty>
@@ -88,7 +143,7 @@ export const Basket = ({ orders, setOrders }) => {
                 </OrderList>
                 <OrderTotal>
                     <TotalName>Итого</TotalName>
-                    <TotalCount>5</TotalCount>
+                    <TotalCount>{totalCount}</TotalCount>
                     <TotlalPrice>{formatPrice(total)}</TotlalPrice>
                 </OrderTotal>
             </Order>

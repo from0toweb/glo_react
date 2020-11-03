@@ -7,7 +7,10 @@ import { MainImg } from './MainImg';
 const MenuStyled = styled.main`
     background-color: #ccc;
     padding-top: 80px;
-    transform: translateX(380px);
+    padding-left: ${({ openBasket }) => (openBasket ? `0px` : `50px`)};
+    transform: ${({ openBasket }) =>
+        openBasket ? `translateX(380px)` : `translateX(0)`};
+    transition: all 0.5s;
 `;
 
 const H2 = styled.h2`
@@ -18,10 +21,10 @@ const H2 = styled.h2`
 const Section = styled.section`
     padding: 0px 15px;
 `;
-export const Menu = ({ setOpenItem }) => {
+export const Menu = ({ setOpenItem, openBasket, setOpenBasket }) => {
     const { burger, other } = dbmenu;
     return (
-        <MenuStyled>
+        <MenuStyled openBasket={openBasket}>
             <MainImg />
             <Section>
                 <H2>Бургеры</H2>

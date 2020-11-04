@@ -19,6 +19,8 @@ const H2 = styled.h2`
 `;
 
 const Section = styled.section`
+    max-width: 1400px;
+    margin: 0px auto;
     padding: 0px 15px;
 `;
 export const Menu = ({ setOpenItem, openBasket, setOpenBasket }) => {

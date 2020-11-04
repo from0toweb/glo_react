@@ -5,7 +5,9 @@ import { useCount } from '../Hooks/useCount';
 import { totalPrice, formatPrice } from '../Functions/secondaryFun';
 import buttonIcon from '../../img/shopping-cart.svg';
 import { Toppings } from './Toppings';
+import { Choices } from './Choices';
 import { useToppings } from '../Hooks/useToppings';
+import { useChoices } from '../Hooks/useChoices';
 
 const Modal = styled.div`
     position: fixed;
@@ -54,6 +56,9 @@ export const PopupButton = styled.button`
         transition: all 0.5s;
         background-color: #151b5f;
     }
+    &:disabled {
+        background-color: #ccc;
+    }
 `;
 
 const ButtonIcon = styled.span`
@@ -78,6 +83,7 @@ const ModalTitle = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 20px;
 `;
 
 const H3 = styled.h3`
@@ -100,6 +106,7 @@ const ModalFooter = styled.div`
 export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
     const counter = useCount();
     const toppings = useToppings(openItem);
+    const choices = useChoices();
 
     const closeModal = e => {
         if (e.target.id === 'modal') {
@@ -111,6 +118,7 @@ export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
         ...openItem,
         count: counter.count,
         topping: toppings.toppings,
+        choice: choices.choice,
     };
 
     const addToOrder = () => {
@@ -128,9 +136,15 @@ export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
                         <Price>{formatPrice(openItem.price)}</Price>
                     </ModalTitle>
                     {openItem.toppings && <Toppings {...toppings} />}
+                    {openItem.choices && (
+                        <Choices {...choices} openItem={openItem} />
+                    )}
                     <ModalFooter>
                         <CountItem {...counter} />
-                        <PopupButton onClick={addToOrder}>
+                        <PopupButton
+                            onClick={addToOrder}
+                            disabled={openItem.choices && !choices.choice}
+                        >
                             <ButtonIcon />
                             {formatPrice(totalPrice(order))}
                         </PopupButton>

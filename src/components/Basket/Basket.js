@@ -147,7 +147,7 @@ export const Basket = ({ orders, setOrders, openBasket, setOpenBasket }) => {
                     <TotlalPrice>{formatPrice(total)}</TotlalPrice>
                 </OrderTotal>
             </Order>
-            <PopupButton>оформить</PopupButton>
+            <PopupButton>Оформить</PopupButton>
         </MainBasket>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import buttonRemove from '../../img/del.svg';
+import buttonRemove from '../../img/trash.svg';
 import { totalPrice } from '../Functions/secondaryFun';
 import { formatPrice } from '../Functions/secondaryFun';
 import { checkedToppings } from '../Functions/secondaryFun';
@@ -9,7 +9,8 @@ const Item = styled.div`
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: ${({ toppings }) => (toppings ? `0px` : `10px`)};
+    margin-bottom: ${({ toppings, choice }) =>
+        toppings || choice ? `0px` : `10px`};
 `;
 const ItemName = styled.span`
     flex-grow: 1;
@@ -49,7 +50,7 @@ export const OrderItem = ({ order, orders, setOrders }) => {
 
     return (
         <>
-            <Item toppings={toppings}>
+            <Item toppings={toppings} choice={order.choice}>
                 <ItemName>{order.name}</ItemName>
                 <ItemCount>{order.count}</ItemCount>
                 <ItemPrice>{formatPrice(totalPrice(order))}</ItemPrice>
@@ -57,6 +58,7 @@ export const OrderItem = ({ order, orders, setOrders }) => {
             </Item>
 
             {toppings && <OrderToppings>{toppings}</OrderToppings>}
+            {order.choice && <OrderToppings>{order.choice}</OrderToppings>}
         </>
     );
 };

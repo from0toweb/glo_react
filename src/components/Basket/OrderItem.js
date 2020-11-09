@@ -4,8 +4,10 @@ import buttonRemove from '../../img/trash.svg';
 import { totalPrice } from '../Functions/secondaryFun';
 import { formatPrice } from '../Functions/secondaryFun';
 import { checkedToppings } from '../Functions/secondaryFun';
+import _ from 'lodash';
 
 const Item = styled.div`
+    cursor: pointer;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -40,9 +42,12 @@ const OrderToppings = styled.span`
     margin-bottom: 10px;
 `;
 
-export const OrderItem = ({ order, orders, setOrders }) => {
-    const removeItem = name => {
-        const newOrderList = orders.filter(item => item.name !== name);
+export const OrderItem = ({ order, orders, index, setOrders, setOpenItem }) => {
+    const removeItem = e => {
+        e.stopPropagation();
+        const newOrderList = orders.filter(item => {
+            return !_.isEqual(item, order);
+        });
         setOrders(newOrderList);
     };
 
@@ -50,11 +55,15 @@ export const OrderItem = ({ order, orders, setOrders }) => {
 
     return (
         <>
-            <Item toppings={toppings} choice={order.choice}>
+            <Item
+                toppings={toppings}
+                choice={order.choice}
+                onClick={() => setOpenItem({ ...order, index })}
+            >
                 <ItemName>{order.name}</ItemName>
                 <ItemCount>{order.count}</ItemCount>
                 <ItemPrice>{formatPrice(totalPrice(order))}</ItemPrice>
-                <ItemRemove onClick={() => removeItem(order.name)}></ItemRemove>
+                <ItemRemove onClick={removeItem}></ItemRemove>
             </Item>
 
             {toppings && <OrderToppings>{toppings}</OrderToppings>}

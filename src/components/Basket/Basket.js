@@ -6,6 +6,8 @@ import { PopupButton } from '../Modal/ProductModal';
 import { OrderItem } from './OrderItem';
 import { totalPrice } from '../Functions/secondaryFun';
 import { formatPrice } from '../Functions/secondaryFun';
+import { projection } from '../Functions/secondaryFun';
+import _ from 'lodash';
 
 const MainBasket = styled.div`
     position: fixed;
@@ -103,7 +105,40 @@ const Empty = styled.p`
     text-align: center;
 `;
 
-export const Basket = ({ orders, setOrders, openBasket, setOpenBasket }) => {
+export const Basket = ({
+    orders,
+    setOrders,
+    openBasket,
+    setOpenBasket,
+    setOpenItem,
+    authentication,
+    login,
+    firebaseDatabase,
+}) => {
+    const dataBase = firebaseDatabase();
+
+    const rulesData = {
+        name: ['name'],
+        price: ['price'],
+        count: ['count'],
+        topping: [
+            'topping',
+            arr => arr.filter(item => item.checked).map(item => item.name),
+        ],
+        choise: ['choise', item => (item ? item : 'no choise')],
+    };
+
+    const sendOrder = () => {
+        const newOrder = orders.map(projection(rulesData));
+
+        dataBase.ref('orders').push().set({
+            clientName: authentication.displayName,
+            clientEmail: authentication.email,
+            order: newOrder,
+        });
+        setOrders([]);
+    };
+
     const total = orders.reduce(
         (result, order) => totalPrice(order) + result,
         0
@@ -129,14 +164,19 @@ export const Basket = ({ orders, setOrders, openBasket, setOpenBasket }) => {
                 <OrderList>
                     <hr />
                     {orders.length ? (
-                        orders.map(order => (
-                            <OrderItem
-                                key={order.id}
-                                order={order}
-                                orders={orders}
-                                setOrders={setOrders}
-                            />
-                        ))
+                        orders.map((order, index) => {
+                            const key = _.uniqueId();
+                            return (
+                                <OrderItem
+                                    key={key}
+                                    order={order}
+                                    orders={orders}
+                                    index={index}
+                                    setOrders={setOrders}
+                                    setOpenItem={setOpenItem}
+                                />
+                            );
+                        })
                     ) : (
                         <Empty>Список заказов пуст</Empty>
                     )}
@@ -147,7 +187,9 @@ export const Basket = ({ orders, setOrders, openBasket, setOpenBasket }) => {
                     <TotlalPrice>{formatPrice(total)}</TotlalPrice>
                 </OrderTotal>
             </Order>
-            <PopupButton>Оформить</PopupButton>
+            <PopupButton onClick={authentication ? sendOrder : login}>
+                Оформить
+            </PopupButton>
         </MainBasket>
     );
 };

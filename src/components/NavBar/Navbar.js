@@ -44,7 +44,12 @@ const LoginImg = styled.img`
     margin-bottom: 3px;
 `;
 
-export const Navbar = () => {
+const LogoutImage = styled(LoginImg)`
+    height: 32px;
+    border-radius: 50%;
+`;
+
+export const Navbar = ({ authentication, login, logout }) => {
     return (
         <>
             <NavbarHeader>
@@ -53,10 +58,20 @@ export const Navbar = () => {
                     <LogoText>MrDonald's</LogoText>
                 </Logo>
 
-                <Login>
-                    <LoginImg src={loginImg} alt="login" />
-                    войти
-                </Login>
+                {authentication ? (
+                    <Login onClick={logout}>
+                        <LogoutImage
+                            src={authentication.photoURL}
+                            alt="login"
+                        />
+                        выйти
+                    </Login>
+                ) : (
+                    <Login onClick={login}>
+                        <LoginImg src={loginImg} alt="login" />
+                        войти
+                    </Login>
+                )}
             </NavbarHeader>
         </>
     );

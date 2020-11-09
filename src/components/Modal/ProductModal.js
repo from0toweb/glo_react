@@ -4,10 +4,12 @@ import { CountItem } from './CountItem';
 import { useCount } from '../Hooks/useCount';
 import { totalPrice, formatPrice } from '../Functions/secondaryFun';
 import buttonIcon from '../../img/shopping-cart.svg';
+import editIcon from '../../img/edit.svg';
 import { Toppings } from './Toppings';
 import { Choices } from './Choices';
 import { useToppings } from '../Hooks/useToppings';
 import { useChoices } from '../Hooks/useChoices';
+import _ from 'lodash';
 
 const Modal = styled.div`
     position: fixed;
@@ -66,7 +68,8 @@ const ButtonIcon = styled.span`
     width: 25px;
     height: 25px;
     vertical-align: sub;
-    background: url(${buttonIcon}) no-repeat center center/100%;
+    background: url(${({ isEdit }) => (isEdit ? editIcon : buttonIcon)})
+        no-repeat center center/100%;
 `;
 
 const ModalContent = styled.div`
@@ -104,17 +107,17 @@ const ModalFooter = styled.div`
 `;
 
 export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
-    const counter = useCount();
+    const counter = useCount(openItem);
     const toppings = useToppings(openItem);
-    const choices = useChoices();
+    const choices = useChoices(openItem);
+    const isEdit = openItem.index > -1;
 
     const closeModal = e => {
         if (e.target.id === 'modal') {
             setOpenItem(null);
         }
     };
-
-    const order = {
+    let order = {
         ...openItem,
         count: counter.count,
         topping: toppings.toppings,
@@ -122,7 +125,33 @@ export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
     };
 
     const addToOrder = () => {
-        setOrders([...orders, order]);
+        const [uniqItem] = orders.filter(
+            elem =>
+                elem.id === order.id &&
+                _.isEqual(elem.topping, order.topping) &&
+                _.isEqual(elem.choice, order.choice)
+        );
+
+        if (uniqItem) {
+            const newOrder = orders.map(item => {
+                if (item === uniqItem) {
+                    item.count += order.count;
+                }
+                return item;
+            });
+
+            setOrders(newOrder);
+            setOpenItem(null);
+        } else {
+            setOrders([...orders, order]);
+            setOpenItem(null);
+        }
+    };
+
+    const editOrder = () => {
+        const newOrder = [...orders];
+        newOrder[openItem.index] = order;
+        setOrders(newOrder);
         setOpenItem(null);
     };
 
@@ -142,10 +171,10 @@ export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
                     <ModalFooter>
                         <CountItem {...counter} />
                         <PopupButton
-                            onClick={addToOrder}
+                            onClick={isEdit ? editOrder : addToOrder}
                             disabled={openItem.choices && !choices.choice}
                         >
-                            <ButtonIcon />
+                            <ButtonIcon isEdit={isEdit} />
                             {formatPrice(totalPrice(order))}
                         </PopupButton>
                     </ModalFooter>

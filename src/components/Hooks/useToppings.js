@@ -10,7 +10,9 @@ const getToppings = toppings => {
 };
 
 export function useToppings(openItem) {
-    const [toppings, setToppings] = useState(getToppings(openItem.toppings));
+    const [toppings, setToppings] = useState(
+        openItem.topping ? openItem.topping : getToppings(openItem.toppings)
+    );
 
     const checkedToppings = id => {
         setToppings(

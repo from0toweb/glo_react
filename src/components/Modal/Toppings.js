@@ -7,12 +7,12 @@ export const ToppingWrap = styled.div`
     column-count: 2;
     column-gap: 10px;
     flex-grow: 1;
-    padding-top: 10px;
+    padding: 10px 0px;
 `;
 export const ToppingLabel = styled.label`
+    width: 100%;
+    display: inline-block;
     padding: 5px 0px;
-    display: flex;
-    align-items: center;
     cursor: pointer;
     border-bottom: 1px solid #ccc;
 `;
@@ -28,10 +28,11 @@ export const CustomCheckBox = styled.span`
     height: 20px;
     border: 2px solid #1e235d;
     border-radius: 50%;
-    background: url(${check}) no-repeat center center/65%
+    background: url(${check}) no-repeat center center/68%
         ${({ checked }) => (checked ? `#1e235d ` : `#fff`)};
     transition: background 0.3s;
     margin-right: 10px;
+    display: inline-block;
 `;
 
 export const Toppings = ({ toppings, checkedToppings }) => {

@@ -18,8 +18,7 @@ export function useAuth(authFirebase) {
                 setAuthentication(null);
             }
         });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [authentication]);
+    }, [auth, authentication]);
 
     return { authentication, login, logout };
 }

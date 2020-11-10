@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
 
-export const useFetch = () => {
+export const useFetch = firebaseDatabase => {
     const [response, setResponse] = useState(null);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchData = async () => {
+        const getData = async () => {
             try {
-                const json = await fetch('DB.json');
-                const res = await json.json();
-                setResponse(res);
+                const rootRef = firebaseDatabase().ref('/goods');
+                rootRef.on('value', snap => {
+                    setResponse(snap.val());
+                });
             } catch (error) {
                 setError(error);
             }
         };
-        fetchData();
-    }, []);
+        getData();
+    }, [firebaseDatabase]);
 
     return { response, error };
 };

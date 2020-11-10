@@ -34,7 +34,11 @@ const App = () => {
         <>
             <GlobalStyle />
             <Navbar {...auth} />
-            <Menu {...openItem} {...openBasket} />
+            <Menu
+                {...openItem}
+                {...openBasket}
+                firebaseDatabase={firebase.database}
+            />
             <Basket
                 {...orders}
                 {...openBasket}

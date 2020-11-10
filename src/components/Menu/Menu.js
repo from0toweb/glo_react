@@ -89,8 +89,8 @@ const Elipsis = styled.div`
     }
 `;
 
-export const Menu = ({ setOpenItem, openBasket, setOpenBasket }) => {
-    const res = useFetch();
+export const Menu = ({ setOpenItem, openBasket, firebaseDatabase }) => {
+    const res = useFetch(firebaseDatabase);
     const dbMenu = res.response;
 
     return (

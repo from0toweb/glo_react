@@ -1,14 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
 import { CountItem } from './CountItem';
-import { useCount } from '../Hooks/useCount';
 import { totalPrice, formatPrice } from '../Functions/secondaryFun';
-import buttonIcon from '../../img/shopping-cart.svg';
-import editIcon from '../../img/edit.svg';
 import { Toppings } from './Toppings';
 import { Choices } from './Choices';
+import { useCount } from '../Hooks/useCount';
 import { useToppings } from '../Hooks/useToppings';
 import { useChoices } from '../Hooks/useChoices';
+import { useAppContext } from '../../appContext';
+import { ModalContext } from './modalContext';
+import editIcon from '../../img/edit.svg';
+import buttonIcon from '../../img/shopping-cart.svg';
+
 import _ from 'lodash';
 
 const Modal = styled.div`
@@ -106,7 +109,9 @@ const ModalFooter = styled.div`
     justify-content: space-between;
 `;
 
-export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
+export const ProductModal = () => {
+    const { openItem, setOpenItem, orders, setOrders } = useAppContext();
+
     const counter = useCount(openItem);
     const toppings = useToppings(openItem);
     const choices = useChoices(openItem);
@@ -156,30 +161,33 @@ export const ProductModal = ({ openItem, setOpenItem, orders, setOrders }) => {
     };
 
     return (
-        <Modal id="modal" onClick={closeModal}>
-            <ModalDialog>
-                <ModalBaner img={openItem.img} />
-                <ModalContent>
-                    <ModalTitle>
-                        <H3>{openItem.name}</H3>
-                        <Price>{formatPrice(openItem.price)}</Price>
-                    </ModalTitle>
-                    {openItem.toppings && <Toppings {...toppings} />}
-                    {openItem.choices && (
-                        <Choices {...choices} openItem={openItem} />
-                    )}
-                    <ModalFooter>
-                        <CountItem {...counter} />
-                        <PopupButton
-                            onClick={isEdit ? editOrder : addToOrder}
-                            disabled={openItem.choices && !choices.choice}
-                        >
-                            <ButtonIcon isEdit={isEdit} />
-                            {formatPrice(totalPrice(order))}
-                        </PopupButton>
-                    </ModalFooter>
-                </ModalContent>
-            </ModalDialog>
-        </Modal>
+        <ModalContext.Provider
+            value={{ ...toppings, ...choices, ...counter, openItem: openItem }}
+        >
+            <Modal id="modal" onClick={closeModal}>
+                <ModalDialog>
+                    <ModalBaner img={openItem.img} />
+                    <ModalContent>
+                        <ModalTitle>
+                            <H3>{openItem.name}</H3>
+                            <Price>{formatPrice(openItem.price)}</Price>
+                        </ModalTitle>
+                        {openItem.toppings && <Toppings />}
+                        {openItem.choices && <Choices />}
+                        {console.log(1)}
+                        <ModalFooter>
+                            <CountItem />
+                            <PopupButton
+                                onClick={isEdit ? editOrder : addToOrder}
+                                disabled={openItem.choices && !choices.choice}
+                            >
+                                <ButtonIcon isEdit={isEdit} />
+                                {formatPrice(totalPrice(order))}
+                            </PopupButton>
+                        </ModalFooter>
+                    </ModalContent>
+                </ModalDialog>
+            </Modal>
+        </ModalContext.Provider>
     );
 };

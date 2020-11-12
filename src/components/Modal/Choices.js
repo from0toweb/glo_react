@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useModalContext } from './modalContext';
 import {
     ToppingWrap,
     ToppingLabel,
@@ -11,7 +12,8 @@ const ChoisesWrap = styled(ToppingWrap)``;
 const ChoisesLabel = styled(ToppingLabel)``;
 const ChoisesInput = styled(ToppingInput)``;
 
-export const Choices = ({ choice, changeChoices, openItem }) => {
+export const Choices = () => {
+    const { choice, changeChoices, openItem } = useModalContext();
     return (
         <>
             <h3>Выберите</h3>

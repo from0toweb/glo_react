@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import check from '../../img/check.svg';
+import { useModalContext } from './modalContext';
 
 export const ToppingWrap = styled.div`
     width: 100%;
@@ -35,7 +36,8 @@ export const CustomCheckBox = styled.span`
     display: inline-block;
 `;
 
-export const Toppings = ({ toppings, checkedToppings }) => {
+export const Toppings = () => {
+    const { toppings, checkedToppings } = useModalContext();
     return (
         <>
             <h3>Добавки</h3>

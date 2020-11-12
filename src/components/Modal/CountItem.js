@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useModalContext } from './modalContext';
 
 const CountWrapper = styled.div`
     display: flex;
@@ -25,7 +26,8 @@ const ButtonCount = styled.button`
     border-radius: 50%;
     border: none;
 `;
-export function CountItem({ count, setCount, onChange }) {
+export function CountItem() {
+    const { count, setCount, onChange } = useModalContext();
     return (
         <CountWrapper>
             <div>

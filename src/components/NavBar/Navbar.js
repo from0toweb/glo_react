@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import logoImg from '../../img/logo.svg';
 import loginImg from '../../img/sign.svg';
+import { useAppContext } from '../../appContext';
 
 const NavbarHeader = styled.header`
     position: fixed;
@@ -49,7 +50,8 @@ const LogoutImage = styled(LoginImg)`
     border-radius: 50%;
 `;
 
-export const Navbar = ({ authentication, login, logout }) => {
+export const Navbar = () => {
+    const { authentication, login, logout } = useAppContext();
     return (
         <>
             <NavbarHeader>

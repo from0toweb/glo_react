@@ -7,6 +7,7 @@ import { OrderItem } from './OrderItem';
 import { totalPrice } from '../Functions/secondaryFun';
 import { formatPrice } from '../Functions/secondaryFun';
 import { projection } from '../Functions/secondaryFun';
+import { useAppContext } from '../../appContext';
 import _ from 'lodash';
 
 const MainBasket = styled.div`
@@ -105,16 +106,18 @@ const Empty = styled.p`
     text-align: center;
 `;
 
-export const Basket = ({
-    orders,
-    setOrders,
-    openBasket,
-    setOpenBasket,
-    setOpenItem,
-    authentication,
-    login,
-    firebaseDatabase,
-}) => {
+export const Basket = () => {
+    const {
+        orders,
+        setOrders,
+        openBasket,
+        setOpenBasket,
+        setOpenItem,
+        authentication,
+        login,
+        firebaseDatabase,
+    } = useAppContext();
+
     const dataBase = firebaseDatabase();
 
     const rulesData = {
@@ -123,9 +126,12 @@ export const Basket = ({
         count: ['count'],
         topping: [
             'topping',
-            arr => arr.filter(item => item.checked).map(item => item.name),
+            arr =>
+                arr && arr.length
+                    ? arr.filter(item => item.checked).map(item => item.name)
+                    : 'no toppings',
         ],
-        choise: ['choise', item => (item ? item : 'no choise')],
+        choice: ['choice', item => (item ? item : 'no choice')],
     };
 
     const sendOrder = () => {

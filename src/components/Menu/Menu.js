@@ -1,9 +1,9 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-
 import { ListItem } from './ListItem';
 import { MainImg } from './MainImg';
 import { useFetch } from '../Hooks/useFetch';
+import { useAppContext } from '../../appContext';
 
 const MenuStyled = styled.main`
     position: relative;
@@ -89,7 +89,8 @@ const Elipsis = styled.div`
     }
 `;
 
-export const Menu = ({ setOpenItem, openBasket, firebaseDatabase }) => {
+export const Menu = () => {
+    const { setOpenItem, openBasket, firebaseDatabase } = useAppContext();
     const res = useFetch(firebaseDatabase);
     const dbMenu = res.response;
 

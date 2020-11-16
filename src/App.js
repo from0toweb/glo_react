@@ -9,11 +9,13 @@ import { useAuth } from './components/Hooks/useAuth';
 import { useOpenBasket } from './components/Hooks/useOpenBasket';
 import { useOpenItem } from './components/Hooks/useOpenItem';
 import { useOrderConfirm } from './components/Hooks/useOrderConfirm';
+import { useThankPopup } from './components/Hooks/useThankPopup';
 import { useOrders } from './components/Hooks/useOrders';
 import { Menu } from './components/Menu/Menu';
 import { ProductModal } from './components/Modal/ProductModal';
 import { Navbar } from './components/NavBar/Navbar';
 import { GlobalStyle } from './components/Styles/GlobalStyle.js';
+import { ThankPopup } from './components/Basket/ThankPopup';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyB7OuOUIPgOhKFLAe1qUqSjEZxPWHCzeRM',
@@ -33,6 +35,7 @@ const App = () => {
     const orders = useOrders();
     const auth = useAuth(firebase.auth);
     const orderConfirm = useOrderConfirm();
+    const thankPopup = useThankPopup();
 
     return (
         <AppContext.Provider
@@ -42,6 +45,7 @@ const App = () => {
                 ...orders,
                 ...auth,
                 ...orderConfirm,
+                ...thankPopup,
                 firebaseDatabase: firebase.database,
             }}
         >
@@ -51,6 +55,7 @@ const App = () => {
             <Basket />
             {openItem.openItem && <ProductModal />}
             {orderConfirm.openOrderConfirm && <OrderConfirm />}
+            {thankPopup.openThankPopup && <ThankPopup />}
         </AppContext.Provider>
     );
 };

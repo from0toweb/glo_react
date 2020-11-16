@@ -1,12 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useModalContext } from './modalContext';
-import {
-    ToppingWrap,
-    ToppingLabel,
-    ToppingInput,
-    CustomCheckBox,
-} from './Toppings';
+import { ToppingWrap, ToppingLabel, ToppingInput, CustomCheckBox } from './Toppings';
 
 const ChoisesWrap = styled(ToppingWrap)``;
 const ChoisesLabel = styled(ToppingLabel)``;

@@ -31,10 +31,7 @@ export function CountItem() {
     return (
         <CountWrapper>
             <div>
-                <ButtonCount
-                    disabled={count <= 1}
-                    onClick={() => setCount(count - 1)}
-                >
+                <ButtonCount disabled={count <= 1} onClick={() => setCount(count - 1)}>
                     -
                 </ButtonCount>
                 <CountInput

@@ -14,10 +14,11 @@ const transporter = nodemailer.createTransport({
 transporter.use('compile', htmltotext());
 
 const sendOrderEmail = data => {
+    const { appartment, city, house, street } = data.delivery;
     const emailText = `
         <div>
             <h2 style="color: #000;">Добрый день ${data.clientName.split(' ')[0]}</h2>
-            <h3 style="color: #000;">Ваш заказ :</h3>
+            <h3 style="color: #000;">Ваш заказ:</h3>
             <ul >
                 ${data.order
                     .map(
@@ -57,6 +58,8 @@ const sendOrderEmail = data => {
                 (sum, item) => sum + item.price * item.count,
                 0
             )}</span> руб.</p>
+            <br/>
+            <h3 style="color: #000;">Адресс доставки: <span style="font-size: 15px; font-weight: 500; color: #000;">г.${city}., ${street} д.${house}., кв.${appartment}</span></h3>
         </div>
     `;
 

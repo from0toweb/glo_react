@@ -135,13 +135,18 @@ export const Basket = () => {
                         <Empty>Список заказов пуст</Empty>
                     )}
                 </OrderList>
-                <OrderTotal>
-                    <TotalName>Итого</TotalName>
-                    <TotalCount>{totalCount}</TotalCount>
-                    <TotlalPrice>{formatPrice(total)}</TotlalPrice>
-                </OrderTotal>
+                {orders.length !== 0 && (
+                    <OrderTotal>
+                        <TotalName>Итого</TotalName>
+                        <TotalCount>{totalCount}</TotalCount>
+                        <TotlalPrice>{formatPrice(total)}</TotlalPrice>
+                    </OrderTotal>
+                )}
             </Order>
-            <PopupButton onClick={authentication ? () => setOpenOrderConfirm(true) : login}>
+            <PopupButton
+                disabled={orders.length === 0}
+                onClick={authentication ? () => setOpenOrderConfirm(true) : login}
+            >
                 Оформить
             </PopupButton>
         </MainBasket>

@@ -25,7 +25,9 @@ const Logo = styled.div`
 const LogoText = styled.span`
     font-size: 24px;
     margin-left: 15px;
-    font-family: Pacifico, sans-serif;
+    font-family: 'Poiret One', cursive;
+    font-weight: 600;
+    letter-spacing: 3px;
 `;
 const Img = styled.img`
     width: 50px;
@@ -62,16 +64,13 @@ export const Navbar = () => {
 
                 {authentication ? (
                     <Login onClick={logout}>
-                        <LogoutImage
-                            src={authentication.photoURL}
-                            alt="login"
-                        />
-                        выйти
+                        <LogoutImage src={authentication.photoURL} alt="login" />
+                        Выйти
                     </Login>
                 ) : (
                     <Login onClick={login}>
                         <LoginImg src={loginImg} alt="login" />
-                        войти
+                        Войти
                     </Login>
                 )}
             </NavbarHeader>

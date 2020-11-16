@@ -7,11 +7,10 @@ import { useAppContext } from '../../appContext';
 
 const MenuStyled = styled.main`
     position: relative;
-    background-color: #ccc;
+    background-color: #e3e3e3;
     padding-top: 80px;
     padding-left: ${({ openBasket }) => (openBasket ? `0px` : `50px`)};
-    transform: ${({ openBasket }) =>
-        openBasket ? `translateX(380px)` : `translateX(0)`};
+    transform: ${({ openBasket }) => (openBasket ? `translateX(380px)` : `translateX(0)`)};
     transition: all 0.5s;
     min-height: 100vh;
 `;
@@ -101,23 +100,15 @@ export const Menu = () => {
                 <>
                     <Section>
                         <H2>Бургеры</H2>
-                        <ListItem
-                            itemList={dbMenu.burger}
-                            setOpenItem={setOpenItem}
-                        />
+                        <ListItem itemList={dbMenu.burger} setOpenItem={setOpenItem} />
                     </Section>
                     <Section>
                         <H2>Закуски / Напитки</H2>
-                        <ListItem
-                            itemList={dbMenu.other}
-                            setOpenItem={setOpenItem}
-                        />
+                        <ListItem itemList={dbMenu.other} setOpenItem={setOpenItem} />
                     </Section>
                 </>
             ) : res.error ? (
-                <PreloadMessage>
-                    Приносим извинения! Мы скоро Все исправим!
-                </PreloadMessage>
+                <PreloadMessage>Приносим извинения! Мы скоро Все исправим!</PreloadMessage>
             ) : (
                 <PreloadMessage>
                     <Elipsis>

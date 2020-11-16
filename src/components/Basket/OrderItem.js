@@ -11,8 +11,7 @@ const Item = styled.div`
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    margin-bottom: ${({ toppings, choice }) =>
-        toppings || choice ? `0px` : `10px`};
+    margin-bottom: ${({ toppings, choice }) => (toppings || choice ? `0px` : `10px`)};
 `;
 const ItemName = styled.span`
     flex-grow: 1;

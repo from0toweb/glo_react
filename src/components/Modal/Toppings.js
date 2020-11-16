@@ -34,6 +34,7 @@ export const CustomCheckBox = styled.span`
     transition: background 0.3s;
     margin-right: 10px;
     display: inline-block;
+    vertical-align: middle;
 `;
 
 export const Toppings = () => {

@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
     * {
     box-sizing: border-box;
-    font-family: Roboto, sans-serif;
+    font-family: Nunito, sans-serif;
     }
 
     body {
@@ -30,7 +30,8 @@ export const GlobalStyle = createGlobalStyle`
     h2,
     h3
     {
-        font-family: Pacifico, sans-serif;
+
+        text-shadow: 1px 1px 10px rgba(150, 150, 150, 0.59);
         padding: 0;
         margin: 0;
     }

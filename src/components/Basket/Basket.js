@@ -1,14 +1,19 @@
+import _ from 'lodash';
 import React from 'react';
 import styled from 'styled-components';
-import closeArrow from '../../img/left-arrow.svg';
-import basketLogo from '../../img/basket.svg';
-import { PopupButton } from '../Modal/ProductModal';
-import { OrderItem } from './OrderItem';
-import { totalPrice } from '../Functions/secondaryFun';
-import { formatPrice } from '../Functions/secondaryFun';
-import { projection } from '../Functions/secondaryFun';
 import { useAppContext } from '../../appContext';
-import _ from 'lodash';
+import basketLogo from '../../img/basket.svg';
+import closeArrow from '../../img/left-arrow.svg';
+import { formatPrice, totalPrice } from '../Functions/secondaryFun';
+import {
+    BasketTitle,
+    OrderTotal,
+    PopupButton,
+    TotalCount,
+    TotalName,
+    TotlalPrice,
+} from '../Styles/ModalStyle';
+import { OrderItem } from './OrderItem';
 
 const MainBasket = styled.div`
     position: fixed;
@@ -23,9 +28,7 @@ const MainBasket = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    transform: translateX(
-        ${({ openBasket }) => (openBasket ? `0px` : `-330px`)}
-    );
+    transform: translateX(${({ openBasket }) => (openBasket ? `0px` : `-330px`)});
     transition: 0.5s;
 `;
 const CloseBasket = styled.span`
@@ -38,12 +41,6 @@ const CloseBasket = styled.span`
     background: url(${closeArrow}) no-repeat center center/cover;
 `;
 
-const BasketTitle = styled.h2`
-    text-transform: uppercase;
-    font-size: 39px;
-    font-weight: normal;
-`;
-
 const Order = styled.div`
     flex-grow: 1;
     width: 100%;
@@ -53,29 +50,13 @@ const Order = styled.div`
     padding: 25px 0px 35px;
 `;
 const OrderList = styled.div``;
-const OrderTotal = styled.div`
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-`;
-const TotalName = styled.span`
-    flex-grow: 1;
-`;
-const TotalCount = styled.span`
-    margin-right: 30px;
-`;
-const TotlalPrice = styled.span`
-    margin-right: 14px;
-    min-width: 99px;
-    text-align: right;
-`;
 
 const OpenBasket = styled.div`
     position: absolute;
     right: 0px;
     top: 0px;
     bottom: 0px;
-    background-color: #ccc;
+    background-color: #e3e3e3;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -115,45 +96,12 @@ export const Basket = () => {
         setOpenItem,
         authentication,
         login,
-        firebaseDatabase,
+        setOpenOrderConfirm,
     } = useAppContext();
 
-    const dataBase = firebaseDatabase();
+    const total = orders.reduce((result, order) => totalPrice(order) + result, 0);
 
-    const rulesData = {
-        name: ['name'],
-        price: ['price'],
-        count: ['count'],
-        topping: [
-            'topping',
-            arr =>
-                arr && arr.length
-                    ? arr.filter(item => item.checked).map(item => item.name)
-                    : 'no toppings',
-        ],
-        choice: ['choice', item => (item ? item : 'no choice')],
-    };
-
-    const sendOrder = () => {
-        const newOrder = orders.map(projection(rulesData));
-
-        dataBase.ref('orders').push().set({
-            clientName: authentication.displayName,
-            clientEmail: authentication.email,
-            order: newOrder,
-        });
-        setOrders([]);
-    };
-
-    const total = orders.reduce(
-        (result, order) => totalPrice(order) + result,
-        0
-    );
-
-    const totalCount = orders.reduce(
-        (result, order) => order.count + result,
-        0
-    );
+    const totalCount = orders.reduce((result, order) => order.count + result, 0);
 
     return (
         <MainBasket openBasket={openBasket}>
@@ -193,7 +141,7 @@ export const Basket = () => {
                     <TotlalPrice>{formatPrice(total)}</TotlalPrice>
                 </OrderTotal>
             </Order>
-            <PopupButton onClick={authentication ? sendOrder : login}>
+            <PopupButton onClick={authentication ? () => setOpenOrderConfirm(true) : login}>
                 Оформить
             </PopupButton>
         </MainBasket>

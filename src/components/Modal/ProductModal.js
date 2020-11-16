@@ -1,113 +1,26 @@
+import _ from 'lodash';
 import React from 'react';
-import styled from 'styled-components';
-import { CountItem } from './CountItem';
-import { totalPrice, formatPrice } from '../Functions/secondaryFun';
-import { Toppings } from './Toppings';
-import { Choices } from './Choices';
+import { useAppContext } from '../../appContext';
+import { formatPrice, totalPrice } from '../Functions/secondaryFun';
+import { useChoices } from '../Hooks/useChoices';
 import { useCount } from '../Hooks/useCount';
 import { useToppings } from '../Hooks/useToppings';
-import { useChoices } from '../Hooks/useChoices';
-import { useAppContext } from '../../appContext';
+import {
+    Modal,
+    ModalDialog,
+    PopupButton,
+    ModalBaner,
+    ModalContent,
+    ModalTitle,
+    H3,
+    Price,
+    ModalFooter,
+    ButtonIcon,
+} from '../Styles/ModalStyle';
+import { Choices } from './Choices';
+import { CountItem } from './CountItem';
 import { ModalContext } from './modalContext';
-import editIcon from '../../img/edit.svg';
-import buttonIcon from '../../img/shopping-cart.svg';
-
-import _ from 'lodash';
-
-const Modal = styled.div`
-    position: fixed;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 20;
-`;
-
-const ModalDialog = styled.div`
-    max-width: 600px;
-    height: 600px;
-    width: 100%;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-`;
-const ModalBaner = styled.div`
-    width: 100%;
-    height: 200px;
-    background: url(${({ img }) => img}) no-repeat center center/cover;
-`;
-
-export const PopupButton = styled.button`
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    width: 200px;
-    padding: 15px 20px;
-    border: none;
-    outline: none;
-    border-radius: 33px;
-    filter: drop-shadow(0px 7px 16px rgba(30, 35, 93, 0.2));
-    color: #fff;
-    background-color: #1e235d;
-    font-size: 19px;
-    line-height: 22px;
-    transition: all 0.5s;
-    &:hover {
-        filter: drop-shadow(0px 7px 20px rgba(30, 35, 93, 0.3));
-        transition: all 0.5s;
-        background-color: #151b5f;
-    }
-    &:disabled {
-        background-color: #ccc;
-    }
-`;
-
-const ButtonIcon = styled.span`
-    display: inline-block;
-    width: 25px;
-    height: 25px;
-    vertical-align: sub;
-    background: url(${({ isEdit }) => (isEdit ? editIcon : buttonIcon)})
-        no-repeat center center/100%;
-`;
-
-const ModalContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex-grow: 1;
-    padding: 20px 40px 40px;
-    align-items: flex-start;
-`;
-
-const ModalTitle = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-`;
-
-const H3 = styled.h3`
-    font-size: 30px;
-    font-weight: normal;
-`;
-const Price = styled.span`
-    font-family: Pacifico;
-    font-size: 30px;
-    font-weight: normal;
-`;
-
-const ModalFooter = styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-`;
+import { Toppings } from './Toppings';
 
 export const ProductModal = () => {
     const { openItem, setOpenItem, orders, setOrders } = useAppContext();
@@ -161,9 +74,7 @@ export const ProductModal = () => {
     };
 
     return (
-        <ModalContext.Provider
-            value={{ ...toppings, ...choices, ...counter, openItem: openItem }}
-        >
+        <ModalContext.Provider value={{ ...toppings, ...choices, ...counter, openItem: openItem }}>
             <Modal id="modal" onClick={closeModal}>
                 <ModalDialog>
                     <ModalBaner img={openItem.img} />
@@ -174,7 +85,6 @@ export const ProductModal = () => {
                         </ModalTitle>
                         {openItem.toppings && <Toppings />}
                         {openItem.choices && <Choices />}
-                        {console.log(1)}
                         <ModalFooter>
                             <CountItem />
                             <PopupButton

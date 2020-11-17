@@ -40,9 +40,9 @@ const CloseBasket = styled.span`
     position: absolute;
     top: 15px;
     right: 15px;
-    width: 20px;
-    height: 10px;
-    background: url(${closeArrow}) no-repeat center center/cover;
+    width: 40px;
+    height: 30px;
+    background: url(${closeArrow}) no-repeat center center/50%;
 `;
 
 const Order = styled.div`

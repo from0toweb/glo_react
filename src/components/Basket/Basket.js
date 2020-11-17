@@ -30,6 +30,10 @@ const MainBasket = styled.div`
     align-items: center;
     transform: translateX(${({ openBasket }) => (openBasket ? `0px` : `-330px`)});
     transition: 0.5s;
+    @media (max-width: 380px) {
+        width: 100%;
+        transform: translateX(${({ openBasket }) => (openBasket ? `0px` : `calc(-100% + 40px)`)});
+    }
 `;
 const CloseBasket = styled.span`
     cursor: pointer;
@@ -62,6 +66,9 @@ const OpenBasket = styled.div`
     justify-content: center;
     width: ${({ openBasket }) => (openBasket ? `0px` : `50px`)};
     transition: 0.5s;
+    @media (max-width: 380px) {
+        width: ${({ openBasket }) => (openBasket ? `0px` : `40px`)};
+    }
 `;
 const OpenImg = styled.span`
     position: relative;

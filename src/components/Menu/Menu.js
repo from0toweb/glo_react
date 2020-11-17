@@ -13,17 +13,28 @@ const MenuStyled = styled.main`
     transform: ${({ openBasket }) => (openBasket ? `translateX(380px)` : `translateX(0)`)};
     transition: all 0.5s;
     min-height: 100vh;
+    @media (max-width: 380px) {
+        padding-left: ${({ openBasket }) => (openBasket ? `0px` : `40px`)};
+        transform: ${({ openBasket }) => (openBasket ? `translateX(100%)` : `translateX(0)`)};
+    }
 `;
 
 const H2 = styled.h2`
     margin-bottom: 20px;
     padding-left: 15px;
+    @media (max-width: 510px) {
+        text-align: center;
+        padding-left: 0px;
+    }
 `;
 
 const Section = styled.section`
     max-width: 1400px;
     margin: 0px auto;
     padding: 0px 15px;
+    @media (max-width: 510px) {
+        padding: 0px;
+    }
 `;
 
 const ellipsis1 = keyframes`
@@ -52,9 +63,9 @@ const ellipsis2 = keyframes`
 `;
 const PreloadMessage = styled.div`
     position: absolute;
-    top: 50%;
+    top: 350px;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(calc(-50% + 20px));
 `;
 
 const Elipsis = styled.div`

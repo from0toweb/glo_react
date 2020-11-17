@@ -9,6 +9,10 @@ export const ToppingWrap = styled.div`
     column-gap: 10px;
     flex-grow: 1;
     padding: 10px 0px;
+    @media (max-width: 490px) {
+        column-count: 1;
+        column-gap: 0px;
+    }
 `;
 export const ToppingLabel = styled.label`
     width: 100%;
@@ -18,10 +22,7 @@ export const ToppingLabel = styled.label`
     border-bottom: 1px solid #ccc;
 `;
 export const ToppingInput = styled.input`
-    position: absolute;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    display: none;
 `;
 
 export const CustomCheckBox = styled.span`

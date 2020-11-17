@@ -34,7 +34,11 @@ const Item = styled.div`
             opacity: 40%;
         }
     }
-    /* @media (max-width: ); */
+    @media (max-width: 510px) {
+        background-size: cover;
+        margin: 15px 0px;
+        height: 190px;
+    }
 `;
 const Wrapper = styled.div`
     display: flex;

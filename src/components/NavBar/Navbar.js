@@ -8,7 +8,7 @@ const NavbarHeader = styled.header`
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 999;
+    z-index: 99;
     height: 80px;
     width: 100%;
     display: flex;

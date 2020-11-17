@@ -33,12 +33,13 @@ export const Modal = styled.div`
     right: 0px;
     bottom: 0px;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 20;
+    z-index: 100;
+    overflow: scroll;
 `;
 
 export const ModalDialog = styled.div`
     max-width: 600px;
-    height: 600px;
+    min-height: 600px;
     width: 100%;
     background-color: #fff;
     display: flex;
@@ -92,6 +93,9 @@ export const ModalContent = styled.div`
     flex-grow: 1;
     padding: 20px 40px 40px;
     align-items: flex-start;
+    @media (max-width: 490px) {
+        padding: 15px 15px;
+    }
 `;
 
 export const ModalTitle = styled.div`
@@ -105,11 +109,16 @@ export const ModalTitle = styled.div`
 export const H3 = styled.h3`
     font-size: 30px;
     font-weight: normal;
+    @media (max-width: 490px) {
+        font-size: 28px;
+    }
 `;
 export const Price = styled.span`
     font-family: Pacifico;
     font-size: 30px;
-    font-weight: normal;
+    @media (max-width: 490px) {
+        font-size: 24px;
+    }
 `;
 
 export const ModalFooter = styled.div`
@@ -117,4 +126,7 @@ export const ModalFooter = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 490px) {
+        flex-direction: column;
+    }
 `;

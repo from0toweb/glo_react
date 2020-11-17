@@ -5,4 +5,5 @@ export const MainImg = styled.div`
     width: 100%;
     height: 210px;
     background: url(${img}) no-repeat center center/cover;
+    margin-bottom: 30px;
 `;

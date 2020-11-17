@@ -15,10 +15,13 @@ import { useForm } from '../Hooks/useForm';
 const Text = styled.h2`
     text-align: center;
     margin-bottom: 30px;
+    @media (max-width: 360px) {
+        font-size: 28px;
+    }
 `;
 
 const ConfirmDialog = styled(ModalDialog)`
-    height: auto;
+    min-height: auto;
 `;
 const ConfirmContent = styled(ModalContent)`
     align-items: center;
@@ -119,7 +122,7 @@ export const OrderConfirm = () => {
         <Modal id="confirm" onClick={closeConfirm}>
             <ConfirmDialog>
                 <ConfirmContent>
-                    <Text>Осталось подтвердить Ваш заказ</Text>
+                    <Text>Осталось подтвердить Ваш&nbsp;заказ</Text>
                     <ConfirmForm>
                         <ConfirmInputGroup>
                             <ConfirmInput

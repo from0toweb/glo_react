@@ -5,6 +5,9 @@ import { useModalContext } from './modalContext';
 const CountWrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    @media (max-width: 490px) {
+        margin-bottom: 20px;
+    }
 `;
 
 const CountInput = styled.input`

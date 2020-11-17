@@ -22,7 +22,7 @@ const MenuStyled = styled.main`
 const H2 = styled.h2`
     margin-bottom: 20px;
     padding-left: 15px;
-    @media (max-width: 510px) {
+    @media (max-width: 938px) {
         text-align: center;
         padding-left: 0px;
     }

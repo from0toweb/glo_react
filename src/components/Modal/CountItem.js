@@ -14,12 +14,14 @@ const CountInput = styled.input`
     width: 70px;
     height: 100%;
     text-align: center;
-
     font-size: 18px;
     pointer-events: none;
     border-radius: 25px;
     border: 1px solid #ccc;
     margin: 0px 7px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 `;
 
 const ButtonCount = styled.button`

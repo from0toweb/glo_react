@@ -27,17 +27,20 @@ const Item = styled.div`
         z-index: -1;
         transition: all 0.3s;
     }
-    &:hover {
-        filter: drop-shadow(0px 10px 25px rgba(0, 0, 0, 0.35));
-        background-size: 120% 120%;
-        &:after {
-            opacity: 40%;
-        }
-    }
+
     @media (max-width: 510px) {
         background-size: cover;
         margin: 15px 0px;
         height: 190px;
+    }
+    @media (min-width: 510px) {
+        &:hover {
+            filter: drop-shadow(0px 10px 25px rgba(0, 0, 0, 0.35));
+            background-size: 120% 120%;
+            &:after {
+                opacity: 40%;
+            }
+        }
     }
 `;
 const Wrapper = styled.div`

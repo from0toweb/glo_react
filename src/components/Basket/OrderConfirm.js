@@ -16,7 +16,7 @@ const Text = styled.h2`
     text-align: center;
     margin-bottom: 30px;
     @media (max-width: 360px) {
-        font-size: 28px;
+        font-size: 26px;
     }
 `;
 
